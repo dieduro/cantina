@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package programa;
-    import javax.swing.DefaultListModel;
-    import java.sql.*;
+import javax.swing.DefaultListModel;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author PC1
@@ -26,12 +28,26 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             String sql="Select * from articulos";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            DefaultListModel modeloarticulos = new DefaultListModel();
-            listararticulos.setModel(modeloarticulos);
             
-            while (rs.next()){
-                modeloarticulos.addElement(rs.getString("nombre"));
-            }
+            //DefaultListModel modeloarticulos = new DefaultListModel();
+           // listararticulos.setModel(modeloarticulos);
+           // while (rs.next()){
+           //     modeloarticulos.addElement(rs.getString("nombre"));
+           // }
+            
+            DefaultTableModel modeloTabla = new DefaultTableModel();
+            //creando encabea de Tabla
+            modeloTabla.setColumnIdentifiers(new Object[]{"ID","Descripcion","Rubro","Cantidad","Precio"});
+            
+            //Consultando a la DB para llenar de DATA los campos de la TABLA
+            String sql2 = "SELECT a.id, a.desripcion, r.nombre, a.cantidad, a.precio FROM articulos a JOIN rubros r on a.rubro_id=r.id WHERE a.activo = '1'";
+            ResultSet rsTabla = st.executeQuery(sql2);
+            
+            while (rsTabla.next()) {
+                modeloTabla.addRow(new Object[]{rsTabla.getString("a.id"),rsTabla.getString("a.desripcion"), 
+                    rsTabla.getString("r.nombre"), rsTabla.getString("a.cantidad"), rsTabla.getString("a.precio")});
+            } 
+            tablaArticulos.setModel(modeloTabla);
             
         } catch (SQLException ex) {
             Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,19 +65,25 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listararticulos = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaArticulos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
-        listararticulos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listararticulos);
+        tablaArticulos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaArticulos);
 
         jMenu1.setText("Archivo");
 
@@ -83,16 +105,16 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1377, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(1036, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(588, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,8 +131,8 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listararticulos;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tablaArticulos;
     // End of variables declaration//GEN-END:variables
     
     conectar cc = new conectar();
