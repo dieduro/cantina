@@ -172,8 +172,7 @@ public class nuevoArticulo extends javax.swing.JFrame {
             String sql = "INSERT INTO articulos (nombre, desripcion, cantidad, precio, rubro_id, activo) VALUES ('"+nombre+"','"+descrip+"','"+cantidad+"','"+precio+"','"+rubro_id+"', 1);";
             Statement st = cn.createStatement();
             int rs = st.executeUpdate(sql);
-            System.out.println("A esta altura tendría que haber cargado el nuevo articulo");
-            System.exit(0);
+            this.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(nuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
