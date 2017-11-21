@@ -18,7 +18,7 @@ public class conectar {
         try{
             //Cargamos el driver
             Class.forName("com.mysql.jdbc.Driver");
-            conect = DriverManager.getConnection("jdbc:mysql://localhost/cantina", "root", "");
+            conect = DriverManager.getConnection("jdbc:mysql://localhost:8889/java_mysql", "root", "root");
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Eror de conexion"+ e);

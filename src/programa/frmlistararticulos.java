@@ -23,17 +23,12 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
      * Creates new form frmlistararticulos
      */
     public frmlistararticulos() {
+        
         try {
             initComponents();
             String sql="Select * from articulos";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
-            //DefaultListModel modeloarticulos = new DefaultListModel();
-           // listararticulos.setModel(modeloarticulos);
-           // while (rs.next()){
-           //     modeloarticulos.addElement(rs.getString("nombre"));
-           // }
             
             DefaultTableModel modeloTabla = new DefaultTableModel();
             //creando encabea de Tabla
@@ -67,6 +62,9 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaArticulos = new javax.swing.JTable();
+        btnNuevoArt = new javax.swing.JButton();
+        btn_editArt = new javax.swing.JButton();
+        txtArea1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -84,6 +82,20 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             }
         ));
         jScrollPane2.setViewportView(tablaArticulos);
+
+        btnNuevoArt.setText("Nuevo Artículo");
+        btnNuevoArt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoArtActionPerformed(evt);
+            }
+        });
+
+        btn_editArt.setText("Editar Artículo");
+        btn_editArt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editArtActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -105,16 +117,30 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1036, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNuevoArt))
+                        .addGap(106, 106, 106)
+                        .addComponent(txtArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(1047, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(22, 22, 22)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(588, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnNuevoArt))
+                    .addComponent(txtArea1))
+                .addContainerGap(785, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,14 +151,35 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void btnNuevoArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoArtActionPerformed
+        
+        nuevoArticulo nArt = new nuevoArticulo();
+        
+        nArt.setVisible(true);
+        nArt.show();
+        System.out.println("SETO");
+    }//GEN-LAST:event_btnNuevoArtActionPerformed
+
+    private void btn_editArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editArtActionPerformed
+        // TODO add your handling code here:
+        int row = tablaArticulos.getSelectedRow();
+        if(row>0){
+            String dato1 = tablaArticulos.getValueAt(row, 1).toString();
+            txtArea1.setText(dato1);
+        }
+    }//GEN-LAST:event_btn_editArtActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNuevoArt;
+    private javax.swing.JButton btn_editArt;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaArticulos;
+    private javax.swing.JTextField txtArea1;
     // End of variables declaration//GEN-END:variables
     
     conectar cc = new conectar();

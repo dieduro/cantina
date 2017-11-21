@@ -82,7 +82,7 @@ public class frmprincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -96,8 +96,10 @@ public class frmprincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
          // TODO add your handling code here:
          frmlistararticulos frmlart = new frmlistararticulos();
-         jDesktopPane1.add(frmlart);
-         frmlart.show();;
+         jDesktopPane1 .add(frmlart);
+         frmlart.show();
+         
+         
          
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
