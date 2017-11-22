@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package programa;
+import java.awt.List;
 import javax.swing.DefaultListModel;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -23,26 +26,40 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
      * Creates new form frmlistararticulos
      */
     public frmlistararticulos() {
+            
+            initComponents();
+            
+            txt_descripcion.setVisible(false);
+            lbl_precio.setVisible(false);
+            txt_precio.setVisible(false);
+            lbl_cantidad.setVisible(false);
+            txt_cantidad.setVisible(false);
+            rubrosComboBox.setVisible(false);
+            btn_update.setVisible(false);
+            lbl_rubro.setVisible(false);
+       
         
         try {
-            initComponents();
-            String sql="Select * from articulos";
+            
+            
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            
             
             DefaultTableModel modeloTabla = new DefaultTableModel();
             //creando encabea de Tabla
             modeloTabla.setColumnIdentifiers(new Object[]{"ID","Descripcion","Rubro","Cantidad","Precio"});
+            tablaArticulos.setModel(modeloTabla);
             
             //Consultando a la DB para llenar de DATA los campos de la TABLA
             String sql2 = "SELECT a.id, a.desripcion, r.nombre, a.cantidad, a.precio FROM articulos a JOIN rubros r on a.rubro_id=r.id WHERE a.activo = '1'";
             ResultSet rsTabla = st.executeQuery(sql2);
             
             while (rsTabla.next()) {
+                
                 modeloTabla.addRow(new Object[]{rsTabla.getString("a.id"),rsTabla.getString("a.desripcion"), 
                     rsTabla.getString("r.nombre"), rsTabla.getString("a.cantidad"), rsTabla.getString("a.precio")});
             } 
-            tablaArticulos.setModel(modeloTabla);
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,6 +67,9 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         
         
     }
+    
+    
+    DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +84,14 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         tablaArticulos = new javax.swing.JTable();
         btnNuevoArt = new javax.swing.JButton();
         btn_editArt = new javax.swing.JButton();
-        txtArea1 = new javax.swing.JTextField();
+        txt_descripcion = new javax.swing.JTextField();
+        txt_cantidad = new javax.swing.JTextField();
+        txt_precio = new javax.swing.JTextField();
+        lbl_cantidad = new javax.swing.JLabel();
+        lbl_precio = new javax.swing.JLabel();
+        rubrosComboBox = new javax.swing.JComboBox<>();
+        btn_update = new javax.swing.JButton();
+        lbl_rubro = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -97,6 +124,32 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_precio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_precioActionPerformed(evt);
+            }
+        });
+
+        lbl_cantidad.setText("Cantidad");
+
+        lbl_precio.setText("Precio");
+
+        rubrosComboBox.setModel(rubrosModel);
+        rubrosComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rubrosComboBoxActionPerformed(evt);
+            }
+        });
+
+        btn_update.setText("Actualizar");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+
+        lbl_rubro.setText("Rubro");
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Salir");
@@ -118,14 +171,30 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnNuevoArt))
-                        .addGap(106, 106, 106)
-                        .addComponent(txtArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(104, 104, 104)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbl_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbl_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btn_update))
+                                .addGap(58, 58, 58)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(rubrosComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_rubro, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(1047, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -134,13 +203,27 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevoArt))
-                    .addComponent(txtArea1))
-                .addContainerGap(785, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbl_cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(lbl_precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_rubro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(btn_update)
+                .addContainerGap(707, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,24 +245,91 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
 
     private void btn_editArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editArtActionPerformed
         // TODO add your handling code here:
+        
+       
+
+        txt_descripcion.setVisible(true);
+        lbl_precio.setVisible(true);
+        txt_precio.setVisible(true);
+        lbl_cantidad.setVisible(true);
+        txt_cantidad.setVisible(true);
+        rubrosComboBox.setVisible(true);
+        btn_update.setVisible(true);
+        lbl_rubro.setVisible(true);
         int row = tablaArticulos.getSelectedRow();
-        if(row>0){
-            String dato1 = tablaArticulos.getValueAt(row, 1).toString();
-            txtArea1.setText(dato1);
+        if(row>=0){
+            String descripcion = tablaArticulos.getValueAt(row, 1).toString();
+            txt_descripcion.setText(descripcion);
+            String cantidad = tablaArticulos.getValueAt(row, 3).toString();
+            txt_cantidad.setText(cantidad);
+            String precio = tablaArticulos.getValueAt(row, 4).toString();
+            txt_precio.setText(precio);
+            String categoria = tablaArticulos.getValueAt(row,2).toString();
+            
+             try {
+            String sql="Select * from rubros r";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            rubrosModel.addElement(categoria);
+            rubrosComboBox.setModel(rubrosModel);
+            
+            while (rs.next()){
+              String cat = rs.getString("r.nombre"); 
+              if (!cat.equals(categoria)){
+                rubrosModel.addElement(cat);
+                rubrosComboBox.setModel(rubrosModel); 
+              }
+               
+            }
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         }
     }//GEN-LAST:event_btn_editArtActionPerformed
+
+    private void txt_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_precioActionPerformed
+
+    private void rubrosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rubrosComboBoxActionPerformed
+       
+    }//GEN-LAST:event_rubrosComboBoxActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        String descrip = txt_descripcion.getText();
+        String cantidad = txt_cantidad.getText();
+        String precio = txt_precio.getText();
+        String rubro = rubrosModel.getSelectedItem().toString();
+        
+        /* String sql="UPDATE rubros SET desripcion = descrip, cantidad = '"+cantidad+"'  from rubros r";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);*/
+        
+    }//GEN-LAST:event_btn_updateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevoArt;
     private javax.swing.JButton btn_editArt;
+    private javax.swing.JButton btn_update;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbl_cantidad;
+    private javax.swing.JLabel lbl_precio;
+    private javax.swing.JLabel lbl_rubro;
+    private javax.swing.JComboBox<String> rubrosComboBox;
     private javax.swing.JTable tablaArticulos;
-    private javax.swing.JTextField txtArea1;
+    private javax.swing.JTextField txt_cantidad;
+    private javax.swing.JTextField txt_descripcion;
+    private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
     
     conectar cc = new conectar();
