@@ -5,12 +5,14 @@
  */
 package programa;
 import java.awt.List;
+import static java.lang.Integer.parseInt;
 import javax.swing.DefaultListModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -37,6 +39,10 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             rubrosComboBox.setVisible(false);
             btn_update.setVisible(false);
             lbl_rubro.setVisible(false);
+            lbl_descrip.setVisible(false);
+            txt_id.setVisible(false);
+            lbl_nombre.setVisible(false);
+            txt_nombre.setVisible(false);
        
         
         try {
@@ -47,16 +53,17 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             
             DefaultTableModel modeloTabla = new DefaultTableModel();
             //creando encabea de Tabla
-            modeloTabla.setColumnIdentifiers(new Object[]{"ID","Descripcion","Rubro","Cantidad","Precio"});
+            modeloTabla.setColumnIdentifiers(new Object[]{"ID","Nombre","Descripcion","Rubro","Cantidad","Precio"});
+            
             tablaArticulos.setModel(modeloTabla);
             
             //Consultando a la DB para llenar de DATA los campos de la TABLA
-            String sql2 = "SELECT a.id, a.desripcion, r.nombre, a.cantidad, a.precio FROM articulos a JOIN rubros r on a.rubro_id=r.id WHERE a.activo = '1'";
+            String sql2 = "SELECT a.id, a.nombre, a.desripcion, r.nombre, a.cantidad, a.precio FROM articulos a JOIN rubros r on a.rubro_id=r.id WHERE a.activo = '1'";
             ResultSet rsTabla = st.executeQuery(sql2);
             
             while (rsTabla.next()) {
-                
-                modeloTabla.addRow(new Object[]{rsTabla.getString("a.id"),rsTabla.getString("a.desripcion"), 
+               
+                modeloTabla.addRow(new Object[]{rsTabla.getString("a.id"),rsTabla.getString("a.nombre"), rsTabla.getString("a.desripcion"), 
                     rsTabla.getString("r.nombre"), rsTabla.getString("a.cantidad"), rsTabla.getString("a.precio")});
             } 
             
@@ -67,10 +74,29 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         
         
     }
-    
-    
     DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
 
+    public int getRubro_id(String rubro) {
+        int rubro_id = 0;   
+        try {
+            String selectId = "SELECT id FROM rubros WHERE nombre = '"+rubro+"';";
+            Statement state = cn.createStatement();
+            ResultSet rs1 = state.executeQuery(selectId);
+            
+            if (rs1.next()) {
+               rubro_id = rs1.getInt(1);
+            } else {
+                
+                System.out.println("NO SE ENCONTRO RUBRO");
+            }
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        
+         return rubro_id;  
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,6 +118,10 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         rubrosComboBox = new javax.swing.JComboBox<>();
         btn_update = new javax.swing.JButton();
         lbl_rubro = new javax.swing.JLabel();
+        lbl_descrip = new javax.swing.JLabel();
+        txt_id = new javax.swing.JTextField();
+        lbl_nombre = new javax.swing.JLabel();
+        txt_nombre = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -150,6 +180,10 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
 
         lbl_rubro.setText("Rubro");
 
+        lbl_descrip.setText("Descripción");
+
+        lbl_nombre.setText("Nombre");
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Salir");
@@ -172,13 +206,13 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNuevoArt))
-                        .addGap(104, 104, 104)
+                            .addComponent(btnNuevoArt)
+                            .addComponent(btn_editArt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(103, 103, 103)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -193,37 +227,59 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                                 .addGap(58, 58, 58)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(rubrosComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbl_rubro, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(1047, Short.MAX_VALUE))
+                                    .addComponent(lbl_rubro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(lbl_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_descrip, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(98, 98, 98)))
+                .addContainerGap(1004, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(9, 9, 9)
+                        .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lbl_descrip, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbl_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addComponent(btnNuevoArt))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbl_cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                            .addComponent(lbl_cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_precio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_rubro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lbl_rubro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addComponent(btn_update)
-                .addContainerGap(707, Short.MAX_VALUE))
+                            .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_update)))
+                .addContainerGap(678, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,7 +296,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         
         nArt.setVisible(true);
         nArt.show();
-        System.out.println("SETO");
+        
     }//GEN-LAST:event_btnNuevoArtActionPerformed
 
     private void btn_editArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editArtActionPerformed
@@ -256,15 +312,23 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         rubrosComboBox.setVisible(true);
         btn_update.setVisible(true);
         lbl_rubro.setVisible(true);
+        lbl_descrip.setVisible(true);
+        lbl_nombre.setVisible(true);
+        txt_nombre.setVisible(true);
+        
         int row = tablaArticulos.getSelectedRow();
         if(row>=0){
-            String descripcion = tablaArticulos.getValueAt(row, 1).toString();
+            String id = tablaArticulos.getValueAt(row, 0).toString();
+            txt_id.setText(id);
+            String nombre = tablaArticulos.getValueAt(row, 1).toString();
+            txt_nombre.setText(nombre);
+            String descripcion = tablaArticulos.getValueAt(row, 2).toString();
             txt_descripcion.setText(descripcion);
-            String cantidad = tablaArticulos.getValueAt(row, 3).toString();
+            String cantidad = tablaArticulos.getValueAt(row, 4).toString();
             txt_cantidad.setText(cantidad);
-            String precio = tablaArticulos.getValueAt(row, 4).toString();
+            String precio = tablaArticulos.getValueAt(row, 5).toString();
             txt_precio.setText(precio);
-            String categoria = tablaArticulos.getValueAt(row,2).toString();
+            String categoria = tablaArticulos.getValueAt(row,3).toString();
             
              try {
             String sql="Select * from rubros r";
@@ -301,14 +365,41 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rubrosComboBoxActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        String descrip = txt_descripcion.getText();
-        String cantidad = txt_cantidad.getText();
-        String precio = txt_precio.getText();
-        String rubro = rubrosModel.getSelectedItem().toString();
+            String rubro = rubrosModel.getSelectedItem().toString();
+            
+            /* ASIGNO A VARIABLE LOS VALORES ACTUALIZADOS */
+            int rubro_id = this.getRubro_id(rubro);
+            int id =parseInt(txt_id.getText());
+            String nombre = txt_nombre.getText();
+            String descrip = txt_descripcion.getText();
+            int cantidad = parseInt(txt_cantidad.getText());
+            int precio = parseInt(txt_precio.getText());
+            
+            try {
+            
+                String sql="UPDATE `articulos` SET "
+                        + "nombre = '"+nombre+"'"
+                        + "desripcion = '"+descrip+"',"
+                        + "cantidad = '"+cantidad+"',"
+                        + "precio = '"+precio+"',"
+                        + "rubro_id = '"+rubro_id+"'"
+                        + "WHERE id = '"+id+"';";
+                
+                //UPDATE `articulos` SET `nombre`='test2',`desripcion`='test2',`cantidad`=999,`precio`=888,`rubro_id`=3,`activo`=1 WHERE id = 5;
+                Statement st = cn.prepareStatement(sql);
+                int filasModificadas = st.executeUpdate(sql);
+                System.out.println(filasModificadas);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "No pudimos editar el artículo.");
+            }
+            
+         
+            
         
-        /* String sql="UPDATE rubros SET desripcion = descrip, cantidad = '"+cantidad+"'  from rubros r";
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);*/
+        
+        
+        
         
     }//GEN-LAST:event_btn_updateActionPerformed
 
@@ -323,12 +414,16 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_cantidad;
+    private javax.swing.JLabel lbl_descrip;
+    private javax.swing.JLabel lbl_nombre;
     private javax.swing.JLabel lbl_precio;
     private javax.swing.JLabel lbl_rubro;
     private javax.swing.JComboBox<String> rubrosComboBox;
     private javax.swing.JTable tablaArticulos;
     private javax.swing.JTextField txt_cantidad;
     private javax.swing.JTextField txt_descripcion;
+    private javax.swing.JTextField txt_id;
+    private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
     
