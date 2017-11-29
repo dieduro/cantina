@@ -34,9 +34,12 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             initComponents();
            
             capaEdit.setVisible(false);
-       
+            llenarTabla();
         
-        try {
+       
+    }
+    public void llenarTabla(){
+         try {
             Statement st = cn.createStatement();
             DefaultTableModel modeloTabla = new DefaultTableModel();
             //creando encabea de Tabla
@@ -58,7 +61,6 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
     }
     DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
@@ -110,6 +112,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         lbl_nombre1 = new javax.swing.JLabel();
         lbl_precio1 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
+        btn_exit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -129,6 +132,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tablaArticulos);
 
         btnNuevoArt.setText("Nuevo Artículo");
+        btnNuevoArt.setAlignmentY(0.0F);
         btnNuevoArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoArtActionPerformed(evt);
@@ -136,6 +140,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         });
 
         btn_editArt.setText("Editar Artículo");
+        btn_editArt.setAlignmentY(0.0F);
         btn_editArt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_editArtActionPerformed(evt);
@@ -188,67 +193,71 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
         capaEdit.setLayout(capaEditLayout);
         capaEditLayout.setHorizontalGroup(
             capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(capaEditLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(capaEditLayout.createSequentialGroup()
-                            .addComponent(lbl_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(138, 138, 138)
-                            .addComponent(lbl_descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(capaEditLayout.createSequentialGroup()
-                            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(capaEditLayout.createSequentialGroup()
-                                    .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(capaEditLayout.createSequentialGroup()
-                                    .addComponent(lbl_cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lbl_precio1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(btn_update))
-                            .addGap(58, 58, 58)
-                            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(rubrosComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_rubro1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(capaEditLayout.createSequentialGroup()
-                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(24, 24, 24)
-                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(96, Short.MAX_VALUE)))
+            .addGroup(capaEditLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(capaEditLayout.createSequentialGroup()
+                        .addComponent(lbl_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(138, 138, 138)
+                        .addComponent(lbl_descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(capaEditLayout.createSequentialGroup()
+                        .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(capaEditLayout.createSequentialGroup()
+                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(capaEditLayout.createSequentialGroup()
+                                .addComponent(lbl_cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_precio1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_update))
+                        .addGap(58, 58, 58)
+                        .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(rubrosComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_rubro1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(capaEditLayout.createSequentialGroup()
+                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         capaEditLayout.setVerticalGroup(
             capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
-            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(capaEditLayout.createSequentialGroup()
-                    .addGap(36, 36, 36)
-                    .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(capaEditLayout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(lbl_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(53, 53, 53))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, capaEditLayout.createSequentialGroup()
-                            .addComponent(lbl_descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(12, 12, 12)
-                            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lbl_cantidad1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_precio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbl_rubro1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addComponent(btn_update)))
-                    .addContainerGap(57, Short.MAX_VALUE)))
+            .addGroup(capaEditLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(capaEditLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lbl_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, capaEditLayout.createSequentialGroup()
+                        .addComponent(lbl_descrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbl_cantidad1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_precio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbl_rubro1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(capaEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_update)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
+
+        btn_exit.setText("Cerrar");
+        btn_exit.setAlignmentY(0.0F);
+        btn_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exitActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -274,8 +283,10 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoArt)
-                            .addComponent(btn_editArt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnNuevoArt)
+                                .addComponent(btn_editArt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_exit))
                         .addGap(50, 50, 50)
                         .addComponent(capaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -296,7 +307,9 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                         .addGap(9, 9, 9)
                         .addComponent(btn_editArt, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(btnNuevoArt))
+                        .addComponent(btnNuevoArt)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_exit))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(capaEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -400,17 +413,24 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "No pudimos editar el artículo.");
             }
             JOptionPane.showMessageDialog(null, "Información de #articulo actualizada.");
+            llenarTabla();
             capaEdit.setVisible(false);
+          
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void txt_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_precioActionPerformed
 
+    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_exitActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNuevoArt;
     private javax.swing.JButton btn_editArt;
+    private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_update;
     private javax.swing.JLayeredPane capaEdit;
     private javax.swing.JMenu jMenu1;
