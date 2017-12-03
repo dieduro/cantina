@@ -17,11 +17,14 @@ import javax.swing.JOptionPane; //para la ventana emergente
 //Estos tres son para asociar un boton a una tecla
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.UnsupportedEncodingException;
 //importar libreria para la base de datos
 import java.sql.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class principal extends javax.swing.JFrame {
 
@@ -37,8 +40,6 @@ public class principal extends javax.swing.JFrame {
         dialogo.setLocationRelativeTo(this);
         dialogo.setTitle("Inicio de Sesión");
         dialogo.setVisible(true);
-        user1.setuser("paco");
-        user1.setpass("paco");
         btnaceptar.addKeyListener(new PresionarTecla());
         
         

@@ -35,6 +35,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
            
             capaEdit.setVisible(false);
             llenarTabla();
+            llenarRubros();
         
        
     }
@@ -44,7 +45,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             DefaultTableModel modeloTabla = new DefaultTableModel();
             //creando encabea de Tabla
             modeloTabla.setColumnIdentifiers(new Object[]{"ID","Nombre","Descripcion","Rubro","Cantidad","Precio"});
-            
+           
             tablaArticulos.setModel(modeloTabla);
             
             //Consultando a la DB para llenar de DATA los campos de la TABLA
@@ -52,7 +53,6 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             ResultSet rsTabla = st.executeQuery(sql2);
             
             while (rsTabla.next()) {
-               
                 modeloTabla.addRow(new Object[]{rsTabla.getString("a.id"),rsTabla.getString("a.nombre"), rsTabla.getString("a.desripcion"), 
                     rsTabla.getString("r.nombre"), rsTabla.getString("a.cantidad"), rsTabla.getString("a.precio")});
             } 
@@ -62,6 +62,26 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+        public void llenarRubros(){
+          try {
+            String sql="Select * from rubros r";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+         
+            rubrosComboBox.setModel(rubrosModel);
+            
+            while (rs.next()){
+              String cat = rs.getString("r.nombre"); 
+              
+                rubrosModel.addElement(cat);
+                rubrosComboBox.setModel(rubrosModel); 
+              }   
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
 
@@ -335,11 +355,11 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
 
     private void btn_editArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editArtActionPerformed
         // TODO add your handling code here:
-        capaEdit.setVisible(true);
-  
-    
+       
         int row = tablaArticulos.getSelectedRow();
-        if(row>=0){
+        
+            if(row>=0){
+            
             String id = tablaArticulos.getValueAt(row, 0).toString();
             txt_id.setText(id);
             String nombre = tablaArticulos.getValueAt(row, 1).toString();
@@ -351,32 +371,15 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             String precio = tablaArticulos.getValueAt(row, 5).toString();
             txt_precio.setText(precio);
             String categoria = tablaArticulos.getValueAt(row,3).toString();
+            rubrosModel.setSelectedItem(categoria);
             
-             try {
-            String sql="Select * from rubros r";
-            Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            rubrosModel.addElement(categoria);
-            rubrosComboBox.setModel(rubrosModel);
-            
-            while (rs.next()){
-              String cat = rs.getString("r.nombre"); 
-              if (!cat.equals(categoria)){
-                rubrosModel.addElement(cat);
-                rubrosComboBox.setModel(rubrosModel); 
-              }
-               
-            }
-            
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-        }
+            capaEdit.setVisible(true);
+            } 
+       
+        
+        
     }//GEN-LAST:event_btn_editArtActionPerformed
+
 
     private void rubrosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rubrosComboBoxActionPerformed
         // TODO add your handling code here:
@@ -412,7 +415,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                 Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No pudimos editar el artículo.");
             }
-            JOptionPane.showMessageDialog(null, "Información de #articulo actualizada.");
+            
             llenarTabla();
             capaEdit.setVisible(false);
           

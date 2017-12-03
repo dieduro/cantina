@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ DIEDURO  */
 package programa;
 
 
@@ -11,6 +11,7 @@ import static java.lang.Integer.parseInt;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
 /**
@@ -27,6 +28,9 @@ public class nuevoArticulo extends javax.swing.JFrame {
         
         
     }
+    frmlistararticulos la = new frmlistararticulos();
+    DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -167,17 +171,19 @@ public class nuevoArticulo extends javax.swing.JFrame {
             String descrip = txtDescrip1.getText();
             int cantidad = parseInt(txtCantidad1.getText());
             float precio = parseFloat(txtPrecio1.getText());
-            int rubro_id = parseInt(txtRubroId1.getText());
+            int rubro_id = la.getRubro_id(rubrosModel.getSelectedItem().toString());
             
             String sql = "INSERT INTO articulos (nombre, desripcion, cantidad, precio, rubro_id, activo) VALUES ('"+nombre+"','"+descrip+"','"+cantidad+"','"+precio+"','"+rubro_id+"', 1);";
             Statement st = cn.createStatement();
             int rs = st.executeUpdate(sql);
             this.setVisible(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(nuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (SQLException ex) {
+                Logger.getLogger(nuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_btnAgregar1ActionPerformed
 
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar1;
