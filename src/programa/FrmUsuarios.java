@@ -5,6 +5,14 @@
  */
 package programa;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diegoduro
@@ -17,6 +25,30 @@ public class FrmUsuarios extends javax.swing.JInternalFrame {
     public FrmUsuarios() {
         initComponents();
     }
+    public final void llenarTabla(){
+         try {
+            Statement st = cn.createStatement();
+            DefaultTableModel modeloTabla = new DefaultTableModel();
+            //creando encabea de Tabla
+            modeloTabla.setColumnIdentifiers(new Object[]{"ID","Nombre de Usuario","Rol"});
+            
+            tablaUsuarios.setModel(modeloTabla);
+            
+            //Consultando a la DB para llenar de DATA los campos de la TABLA
+            String sql2 = "SELECT u.id, u.nick, u.pass, u.rol FROM usuarios u WHERE u.activo = '1'";
+            ResultSet rsTabla = st.executeQuery(sql2);
+            
+            while (rsTabla.next()) {
+               
+                modeloTabla.addRow(new Object[]{rsTabla.getString("u.id"),rsTabla.getString("u.nick"), rsTabla.getString("u.rol")});
+            } 
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmListarArticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,15 +59,41 @@ public class FrmUsuarios extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaUsuarios);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 668, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(49, Short.MAX_VALUE)))
         );
 
         pack();
@@ -43,5 +101,11 @@ public class FrmUsuarios extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
+    Conectar cc = new Conectar();
+    Connection cn = cc.conexion();
+
+
 }
