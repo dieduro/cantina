@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- DIEDURO  */
+ NICO ZAJIC*/
 package programa;
 
 
@@ -18,20 +18,59 @@ import javax.swing.JTable;
  *
  * @author diegoduro
  */
-public class nuevoArticulo extends javax.swing.JFrame {
+public class NuevoArticulo1 extends javax.swing.JFrame {
 
     /**
      * Creates new form nuevoArticulo
      */
-    public nuevoArticulo() {
+    public NuevoArticulo1() {
         initComponents();
-        
+        la.llenarRubros(rubrosModel);
         
     }
     frmlistararticulos la = new frmlistararticulos();
+    /*public void llenarRubros(){
+          try {
+            String sql="Select * from rubros r";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+         
+            rubrosComboBox.setModel(rubrosModel);
+           
+            while (rs.next()){
+              String cat = rs.getString("r.nombre"); 
+              
+                rubrosModel.addElement(cat);
+                rubrosComboBox.setModel(rubrosModel); 
+              }   
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
+    /*public int getRubro_id(String rubro) {
+        int rubro_id = 0;   
+        try {
+            String selectId = "SELECT id FROM rubros WHERE nombre = '"+rubro+"';";
+            Statement state = cn.createStatement();
+            ResultSet rs1 = state.executeQuery(selectId);
+            
+            if (rs1.next()) {
+               rubro_id = rs1.getInt(1);
+            } else {
+                
+                System.out.println("NO SE ENCONTRO RUBRO");
+            }
+            
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        
+         return rubro_id;  
+    }*/
     DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +84,6 @@ public class nuevoArticulo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblRubroId1 = new javax.swing.JLabel();
         lblNombre1 = new javax.swing.JLabel();
-        txtRubroId1 = new javax.swing.JTextField();
         txtCantidad1 = new javax.swing.JTextField();
         btnAgregar1 = new javax.swing.JButton();
         lblCantidad1 = new javax.swing.JLabel();
@@ -54,12 +92,11 @@ public class nuevoArticulo extends javax.swing.JFrame {
         txtDescrip1 = new javax.swing.JTextField();
         txtNombre1 = new javax.swing.JTextField();
         lblPrecio1 = new javax.swing.JLabel();
+        rubrosComboBox = new javax.swing.JComboBox<>();
 
-        lblRubroId1.setText("Id de Rubro");
+        lblRubroId1.setText("Rubro");
 
         lblNombre1.setText("Nombre ");
-
-        txtCantidad1.setSize(new java.awt.Dimension(200, 200));
 
         btnAgregar1.setText("Agregar");
         btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
@@ -72,43 +109,46 @@ public class nuevoArticulo extends javax.swing.JFrame {
 
         lblDescrip1.setText("Descripción");
 
-        txtDescrip1.setSize(new java.awt.Dimension(200, 200));
-
-        txtNombre1.setSize(new java.awt.Dimension(200, 200));
-
         lblPrecio1.setText("Precio");
+
+        rubrosComboBox.setModel(rubrosModel);
+        rubrosComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rubrosComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDescrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblRubroId1)
-                                .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecio1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtRubroId1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                                .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtDescrip1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                                        .addComponent(txtNombre1))
-                                    .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(2, 2, 2)))))
+                            .addComponent(lblDescrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombre1)
+                            .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRubroId1))
+                        .addGap(22, 22, 22)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtPrecio1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtDescrip1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                                .addComponent(txtNombre1))
+                            .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -122,27 +162,20 @@ public class nuevoArticulo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDescrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescrip1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(lblCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(lblRubroId1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtRubroId1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRubroId1)
+                    .addComponent(rubrosComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,7 +185,7 @@ public class nuevoArticulo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,14 +209,18 @@ public class nuevoArticulo extends javax.swing.JFrame {
             String sql = "INSERT INTO articulos (nombre, desripcion, cantidad, precio, rubro_id, activo) VALUES ('"+nombre+"','"+descrip+"','"+cantidad+"','"+precio+"','"+rubro_id+"', 1);";
             Statement st = cn.createStatement();
             int rs = st.executeUpdate(sql);
+            la.llenarTabla();
             this.setVisible(false);
-            } catch (SQLException ex) {
-                Logger.getLogger(nuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoArticulo1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAgregar1ActionPerformed
 
-    
-    
+    private void rubrosComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rubrosComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rubrosComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar1;
@@ -194,11 +231,11 @@ public class nuevoArticulo extends javax.swing.JFrame {
     private javax.swing.JLabel lblPrecio1;
     private javax.swing.JLabel lblRubroId1;
     private java.awt.List list1;
+    private javax.swing.JComboBox<String> rubrosComboBox;
     private javax.swing.JTextField txtCantidad1;
     private javax.swing.JTextField txtDescrip1;
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtPrecio1;
-    private javax.swing.JTextField txtRubroId1;
     // End of variables declaration//GEN-END:variables
 
   conectar cc = new conectar();

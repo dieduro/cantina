@@ -18,10 +18,10 @@ public class conectar {
         try{
             //Cargamos el driver
             Class.forName("com.mysql.jdbc.Driver");
-            conect = DriverManager.getConnection("jdbc:mysql://localhost:3306/cantina_db", "root", "root");
+            conect = DriverManager.getConnection("jdbc:mysql://localhost/cantina_db", "root", "root");
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Eror de conexion"+ e);
+            JOptionPane.showMessageDialog(null,"Error de conexion"+ e);
         }
         return conect;
     } 
