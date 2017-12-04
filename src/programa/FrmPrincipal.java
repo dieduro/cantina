@@ -27,50 +27,77 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        panelArticulos = new javax.swing.JDesktopPane();
+        panelUsuarios = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuArticulos = new javax.swing.JMenu();
+        listarArticulos = new javax.swing.JMenuItem();
+        exit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        menuAdmin = new javax.swing.JMenu();
+        listarUsuarios = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelArticulosLayout = new javax.swing.GroupLayout(panelArticulos);
+        panelArticulos.setLayout(panelArticulosLayout);
+        panelArticulosLayout.setHorizontalGroup(
+            panelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 784, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+        panelArticulosLayout.setVerticalGroup(
+            panelArticulosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Articulos");
+        javax.swing.GroupLayout panelUsuariosLayout = new javax.swing.GroupLayout(panelUsuarios);
+        panelUsuarios.setLayout(panelUsuariosLayout);
+        panelUsuariosLayout.setHorizontalGroup(
+            panelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 760, Short.MAX_VALUE)
+        );
+        panelUsuariosLayout.setVerticalGroup(
+            panelUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Listar Articulos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuArticulos.setText("Articulos");
+
+        listarArticulos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        listarArticulos.setText("Listar Articulos");
+        listarArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                listarArticulosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuArticulos.add(listarArticulos);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Salir");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        exit.setText("Salir");
+        exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                exitActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menuArticulos.add(exit);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuArticulos);
 
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
+
+        menuAdmin.setText("Admin");
+
+        listarUsuarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        listarUsuarios.setText("Usuarios");
+        listarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdmin.add(listarUsuarios);
+
+        jMenuBar1.add(menuAdmin);
 
         setJMenuBar(jMenuBar1);
 
@@ -78,30 +105,48 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(panelArticulos)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(panelUsuarios)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelArticulos)
+                .addGap(697, 697, 697))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(panelUsuarios)
+                    .addGap(471, 471, 471)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_exitActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void listarArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarArticulosActionPerformed
          // TODO add your handling code here:
          FrmListarArticulos frmlart = new FrmListarArticulos();
-         jDesktopPane1 .add(frmlart);
+         panelArticulos.add(frmlart);
          frmlart.show();
          
          
          
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_listarArticulosActionPerformed
+
+    private void listarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarUsuariosActionPerformed
+        FrmUsuarios userForm = new FrmUsuarios();
+        panelUsuarios.add(userForm);
+        userForm.show();
+    }//GEN-LAST:event_listarUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,11 +185,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem exit;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem listarArticulos;
+    private javax.swing.JMenuItem listarUsuarios;
+    private javax.swing.JMenu menuAdmin;
+    private javax.swing.JMenu menuArticulos;
+    private javax.swing.JDesktopPane panelArticulos;
+    private javax.swing.JDesktopPane panelUsuarios;
     // End of variables declaration//GEN-END:variables
 }
