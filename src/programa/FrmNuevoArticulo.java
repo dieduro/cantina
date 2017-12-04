@@ -18,17 +18,17 @@ import javax.swing.JTable;
  *
  * @author diegoduro
  */
-public class NuevoArticulo1 extends javax.swing.JFrame {
+public class FrmNuevoArticulo extends javax.swing.JFrame {
 
     /**
      * Creates new form nuevoArticulo
      */
-    public NuevoArticulo1() {
+    public FrmNuevoArticulo() {
         initComponents();
         la.llenarRubros(rubrosModel);
         
     }
-    frmlistararticulos la = new frmlistararticulos();
+    FrmListarArticulos la = new FrmListarArticulos();
     /*public void llenarRubros(){
           try {
             String sql="Select * from rubros r";
@@ -213,7 +213,7 @@ public class NuevoArticulo1 extends javax.swing.JFrame {
             this.setVisible(false);
             
         } catch (SQLException ex) {
-            Logger.getLogger(NuevoArticulo1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmNuevoArticulo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregar1ActionPerformed
 
@@ -238,7 +238,7 @@ public class NuevoArticulo1 extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrecio1;
     // End of variables declaration//GEN-END:variables
 
-  conectar cc = new conectar();
+  Conectar cc = new Conectar();
   Connection cn = cc.conexion();
 
 

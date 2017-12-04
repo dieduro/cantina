@@ -10,7 +10,7 @@ import javax.swing.*;
  *
  * @author usuario
  */
-public class conectar {
+public class Conectar {
     Connection conect =null;
     
     public Connection conexion(){

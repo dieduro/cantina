@@ -23,13 +23,13 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
-public class frmlistararticulos extends javax.swing.JInternalFrame {
+public class FrmListarArticulos extends javax.swing.JInternalFrame {
 
     
     /**
      * Creates new form frmlistararticulos
      */
-    public frmlistararticulos() {
+    public FrmListarArticulos() {
             
             initComponents();
            
@@ -60,7 +60,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmListarArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -81,7 +81,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
               }   
             
         } catch (SQLException ex) {
-            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmListarArticulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     DefaultComboBoxModel rubrosModel = new DefaultComboBoxModel();
@@ -102,7 +102,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
             
             
             } catch (SQLException ex) {
-            Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrmListarArticulos.class.getName()).log(Level.SEVERE, null, ex);
             }   
         
          return rubro_id;  
@@ -347,7 +347,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
 
     private void btnNuevoArtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoArtActionPerformed
         
-        NuevoArticulo1 nArt = new NuevoArticulo1();
+        FrmNuevoArticulo nArt = new FrmNuevoArticulo();
         
         nArt.setVisible(true);
         nArt.show();
@@ -426,7 +426,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
                 int filasModificadas = st.executeUpdate(sql);
                 System.out.println(filasModificadas);
             } catch (SQLException ex) {
-                Logger.getLogger(frmlistararticulos.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FrmListarArticulos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "No pudimos editar el artículo.");
             }
             JOptionPane.showMessageDialog(null, "Información de #articulo actualizada.");
@@ -469,7 +469,7 @@ public class frmlistararticulos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
     
-    conectar cc = new conectar();
+    Conectar cc = new Conectar();
     Connection cn = cc.conexion();
 
    

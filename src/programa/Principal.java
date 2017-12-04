@@ -24,7 +24,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class principal extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form principal
@@ -32,7 +32,7 @@ public class principal extends javax.swing.JFrame {
     Usuario user1 = new Usuario();
     
     
-    public principal() {
+    public Principal() {
         initComponents();
         dialogo.setSize(400, 300);
         dialogo.setLocationRelativeTo(this);
@@ -199,7 +199,7 @@ public class principal extends javax.swing.JFrame {
                 }
             }
             if(bandera){
-                frmprincipal frmp = new frmprincipal();
+                FrmPrincipal frmp = new FrmPrincipal();
                 frmp.setVisible(true);
                 dialogo.setVisible(false);
             }
@@ -208,7 +208,7 @@ public class principal extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnaceptarActionPerformed
@@ -249,20 +249,21 @@ public class principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new principal().setVisible(false);
+                new Principal().setVisible(false);
                 
             }
         });
@@ -281,7 +282,7 @@ public class principal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     //creamos la conexion a la base de datos
-    conectar cc= new conectar();
+    Conectar cc= new Conectar();
     Connection cn =cc.conexion();
     
     
