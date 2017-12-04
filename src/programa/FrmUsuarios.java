@@ -24,6 +24,7 @@ public class FrmUsuarios extends javax.swing.JInternalFrame {
      */
     public FrmUsuarios() {
         initComponents();
+        llenarTabla();
     }
     public final void llenarTabla(){
          try {
