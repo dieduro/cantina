@@ -18,13 +18,17 @@ public class Usuario {
     
     private String user;
     private String pass;
+    private String tipo;
     
-    public void setuser(String us){
+    public void setUser(String us){
         this.user=us;
     }
     
-    public void setpass(String pw){
+    public void setPass(String pw){
         this.pass=pw;
+    }
+    public void setTipo(String tipo){
+        this.tipo=tipo;
     }
     
     public String getuser(){
@@ -33,5 +37,8 @@ public class Usuario {
     
     public String getpass(){
         return this.pass;
+    }
+    public String getTipo(){
+        return this.tipo;
     }
 }

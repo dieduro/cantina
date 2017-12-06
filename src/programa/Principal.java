@@ -38,8 +38,9 @@ public class Principal extends javax.swing.JFrame {
         dialogo.setLocationRelativeTo(this);
         dialogo.setTitle("Inicio de Sesión");
         dialogo.setVisible(true);
-        user1.setuser("paco");
-        user1.setpass("paco");
+        user1.setUser("paco");
+        user1.setPass("paco");
+        user1.setTipo("administrador");
         btnaceptar.addKeyListener(new PresionarTecla());
         
         
@@ -195,11 +196,14 @@ public class Principal extends javax.swing.JFrame {
                 if(nick.equals(usuario)){
                     if(pass.equals(password)){
                         bandera=true;
+                        user1.setUser(nick);
+                        user1.setPass(pass);
+                        user1.setTipo(tipo);
                     }
                 }
             }
             if(bandera){
-                FrmPrincipal frmp = new FrmPrincipal();
+                FrmPrincipal frmp = new FrmPrincipal(user1);
                 frmp.setVisible(true);
                 dialogo.setVisible(false);
             }
@@ -209,6 +213,7 @@ public class Principal extends javax.swing.JFrame {
             
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         
     }//GEN-LAST:event_btnaceptarActionPerformed
